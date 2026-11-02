@@ -1,0 +1,62 @@
+CREATE TABLE IF NOT EXISTS students (
+    student_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    student_name TEXT NOT NULL,
+    age INTEGER,
+    department TEXT
+);
+CREATE TABLE IF NOT EXISTS subjects (
+    subject_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    subject_name TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS marks (
+    mark_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    student_id INTEGER,
+    subject_id INTEGER,
+    marks_obtained INTEGER,
+
+    FOREIGN KEY (student_id)
+    REFERENCES students(student_id),
+
+    FOREIGN KEY (subject_id)
+    REFERENCES subjects(subject_id)
+);
+INSERT INTO students (student_name, age, department)
+VALUES
+('Arjun', 20, 'CSE'),
+('Rahul', 19, 'CSE');
+
+INSERT INTO subjects (subject_name)
+VALUES
+('Java'),
+('DBMS');
+
+INSERT INTO marks (student_id, subject_id, marks_obtained)
+VALUES
+(1, 1, 85),
+(1, 2, 90);
+
+INSERT INTO students (student_name, age, department)
+VALUES ('Kiran', 20, 'ECE');
+
+SELECT * FROM students;
+
+UPDATE students
+SET age = 21
+WHERE student_id = 1;
+
+DELETE FROM students
+WHERE student_id = 2;
+
+SELECT * FROM students;
+SELECT * FROM subjects;
+SELECT * FROM marks;
+
+SELECT
+    students.student_name,
+    subjects.subject_name,
+    marks.marks_obtained
+FROM marks
+JOIN students
+ON marks.student_id = students.student_id
+JOIN subjects
+ON marks.subject_id = subjects.subject_id;
